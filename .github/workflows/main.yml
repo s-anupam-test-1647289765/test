@@ -1,0 +1,16 @@
+name: delete-old-versions-push
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  delete-old-packages-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Delete package
+        uses: actions/delete-package-versions@v4
+        with: 
+            package-name: 'ubuntu'
+            package-type: 'container'
+            num-old-versions-to-delete: 1
