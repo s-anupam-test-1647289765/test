@@ -27,19 +27,6 @@ jobs:
       - name: Install package
         run: |
           gem install github-linguist --version "7.24.1" -s "https://${{ secrets.GITHUB_TOKEN }}@rubygems.pkg.github.com/github/"
-
-  install_prod_npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com/
-      - name: Install package
-        run: |
-          npm install @github/prettier-config -ddd
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   install_prod_specs:
     runs-on: ubuntu-latest
@@ -54,3 +41,30 @@ jobs:
       - name: curl specs
         run: |
           curl -vLi "https://${{ secrets.GITHUB_TOKEN }}@rubygems-lab.pkg.github.com/github/specs.4.8.gz"
+
+  install_prod_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - name: Install package
+        run: |
+          npm install @github/prettier-config -ddd
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  nuget_query_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query package
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://nuget.pkg.github.com/GitHub/query 
+
+  nuget_query_lab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query package
+        run: |
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://nuget-lab.pkg.github.com/GitHub/query 
