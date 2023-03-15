@@ -27,6 +27,19 @@ jobs:
       - name: Install package
         run: |
           gem install github-linguist --version "7.24.1" -s "https://${{ secrets.GITHUB_TOKEN }}@rubygems.pkg.github.com/github/"
+
+  install_prod_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+      - name: Install package
+        run: |
+          npm install @github/prettier-config
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
   install_prod_specs:
     runs-on: ubuntu-latest
