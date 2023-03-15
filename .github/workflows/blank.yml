@@ -27,3 +27,17 @@ jobs:
       - name: Install package
         run: |
           gem install github-linguist --version "7.24.1" -s "https://${{ secrets.GITHUB_TOKEN }}@rubygems.pkg.github.com/github/"
+          
+  install_prod_specs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: curl specs
+        run: |
+          curl -vLi "https://${{ secrets.GITHUB_TOKEN }}@rubygems.pkg.github.com/github/specs.4.8.gz"
+          
+  install_lab_specs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: curl specs
+        run: |
+          curl -vLi "https://${{ secrets.GITHUB_TOKEN }}@rubygems-lab.pkg.github.com/github/specs.4.8.gz"
