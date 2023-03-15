@@ -1,0 +1,25 @@
+name: Install ruby
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  packages: read
+
+jobs:
+  install_lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+      - name: Install package
+        run: |
+          gem install github-linguist --version "7.24.1" -s "https://${{ secrets.GITHUB_TOKEN }}@rubygems-lab.pkg.github.com/github/"
+
+  install_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ruby/setup-ruby@v1
+      - name: Install package
+        run: |
+          gem install github-linguist --version "7.24.1" -s "https://${{ secrets.GITHUB_TOKEN }}@rubygems.pkg.github.com/github/"
